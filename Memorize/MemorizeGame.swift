@@ -1,5 +1,5 @@
 //
-//  MemorizeGameModel.swift
+//  MemorizeGame.swift
 //  Memorize
 //
 //  Created by 张洋 on 2021/6/27.
@@ -11,12 +11,12 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
     
     private(set) var cards: Array<Card>
     private var lastIndex: Int?
+    private(set) var point: Int = 0
     
     init(numberOfCards: Int, createContent: (_ index: Int) -> CardContent) {
         cards = Array<Card>()
         for i in 0..<numberOfCards {
-            cards.append(Card(content: createContent(i), id: i*2))
-            cards.append(Card(content: createContent(i), id: i*2+1))
+            cards.append(Card(content: createContent(i), id: i))
         }
     }
     
@@ -26,6 +26,9 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
                 if li != i && cards[li].content == cards[i].content {
                     cards[i].isMatched = true
                     cards[li].isMatched = true
+                    point += 2
+                }else{
+                    point -= 1
                 }
                 lastIndex = nil
             }else{

@@ -13,7 +13,8 @@ struct ContentView: View {
     
     var body: some View{
         VStack{
-            Text("Memorize!").font(.largeTitle)
+            Text("\(gameViewModel.theme.name)").font(.largeTitle)
+            Text("Point: \(gameViewModel.gameModel.point)").font(.title2)
             Spacer()
             ScrollView(content: {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
@@ -22,9 +23,18 @@ struct ContentView: View {
                             .onTapGesture {
                                 gameViewModel.choose(card)
                             }
-                    }
+                    } 
                 }
             })
+            HStack{
+                Button(action: {
+                    gameViewModel.newGame()
+                }, label: {
+                    Image(systemName: "macwindow.badge.plus")
+                    Text("NewGame")
+                })
+                Spacer()
+            }
         }
         .padding()
     }
