@@ -12,6 +12,7 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
     private var lastIndex: Int?
     private(set) var point: Int = 0
+    private var flapedCardIndex: Set<Int> = []
     
     init(numberOfCards: Int, createContent: (_ index: Int) -> CardContent) {
         cards = Array<Card>()
@@ -28,7 +29,14 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
                     cards[li].isMatched = true
                     point += 2
                 }else{
-                    point -= 1
+                    if flapedCardIndex.contains(li) {
+                        point -= 1
+                    }
+                    if flapedCardIndex.contains(i) {
+                        point -= 1
+                    }
+                    flapedCardIndex.insert(i)
+                    flapedCardIndex.insert(li)
                 }
                 lastIndex = nil
             }else{
