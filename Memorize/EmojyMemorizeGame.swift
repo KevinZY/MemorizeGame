@@ -9,6 +9,8 @@ import Foundation
 
 class EmojyMemorizeGame: ObservableObject {
     
+    typealias Card = MemorizeGame<String>.Card
+    
     @Published private(set) var gameModel: MemorizeGame<String>
     
     @Published private(set) var theme: MemorizeGameTheme
@@ -34,7 +36,7 @@ class EmojyMemorizeGame: ObservableObject {
         }
     }
     
-    func choose(_ card: MemorizeGame<String>.Card) {
+    func choose(_ card: Card) {
         gameModel.choose(card)
     }
     

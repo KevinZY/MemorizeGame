@@ -10,12 +10,17 @@ import Foundation
 struct MemorizeGame<CardContent> where CardContent: Equatable {
     
     private(set) var cards: Array<Card>
-    private var lastIndex: Int?
-    private(set) var point: Int = 0
-    private var flapedCardIndex: Set<Int> = []
+    private var lastIndex: Int?{
+        get{ cards.indices.filter {cards[$0].isFaceUp == true}.oneAndOnly }
+        set{ cards.indices.forEach { cards[$0].isFaceUp = ($0 == newValue)} }
+    }
+    private(set) var point: Int
+    private var flapedCardIndex: Set<Int>
     
     init(numberOfCards: Int, createContent: (_ index: Int) -> CardContent) {
-        cards = Array<Card>()
+        cards = []
+        point = 0
+        flapedCardIndex = []
         for i in 0..<numberOfCards {
             cards.append(Card(content: createContent(i), id: i))
         }
@@ -38,23 +43,28 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
                     flapedCardIndex.insert(i)
                     flapedCardIndex.insert(li)
                 }
-                lastIndex = nil
+                cards[i].isFaceUp = true
             }else{
-                for j in cards.indices{
-                    cards[j].isFaceUp = false
-                }
                 lastIndex = i
             }
-            cards[i].isFaceUp.toggle()
         }
     }
     
     struct Card: Identifiable {
         var content: CardContent
-        var isFaceUp: Bool = false
-        var isMatched: Bool = false
+        var isFaceUp = false
+        var isMatched = false
         
         var id: Int
     }
-    
+}
+
+extension Array{
+    var oneAndOnly: Element?{
+        if self.count == 1 {
+            return self.first
+        }else{
+            return nil
+        }
+    }
 }
