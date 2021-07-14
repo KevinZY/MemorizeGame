@@ -17,14 +17,9 @@ struct EmojyMemorizeGameView: View {
             Text("\(game.theme.name)").font(.largeTitle)
             Text("Point: \(game.gameModel.point)").font(.title2)
             Spacer()
-            ScrollView(content: {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(game.gameModel.cards){card in
-                        CardView(card).aspectRatio(2/3, contentMode: .fit)
-                            .onTapGesture {
-                                game.choose(card)
-                            }
-                    } 
+            AspectVGrid(items: game.gameModel.cards, aspectRatio: 2/3, content: {card in
+                CardView(card).onTapGesture {
+                    game.choose(card)
                 }
             })
             HStack{
@@ -50,8 +45,6 @@ struct CardView: View {
     init(_ givenCard: Card) {
         card = givenCard
     }
-
-    
     
     var body: some View{
         GeometryReader{ geometry in
@@ -62,6 +55,8 @@ struct CardView: View {
                 }else if card.isFaceUp {
                     shape.fill().foregroundColor(.white)
                     shape.strokeBorder(lineWidth: DrawingConsts.borderWidth)
+                    //TODO: 重点研究SwiftUI的坐标系
+                    Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 120 - 90)).padding(5).opacity(0.6)
                     Text(card.content).font(calFont(geometry))
                 }else {
                     shape.fill()
@@ -111,7 +106,8 @@ struct CardView: View {
 //生成左侧预览界面用的
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        EmojyMemorizeGameView(game: EmojyMemorizeGame()).preferredColorScheme(.light)
-        EmojyMemorizeGameView(game: EmojyMemorizeGame()).preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+        let game: EmojyMemorizeGame = EmojyMemorizeGame()
+        game.choose(game.gameModel.cards.first!)
+        return EmojyMemorizeGameView(game: game).preferredColorScheme(.light)
     }
 }
