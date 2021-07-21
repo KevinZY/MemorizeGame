@@ -16,9 +16,7 @@ struct CardView: View {
         GeometryReader{geometry in
             ZStack{
                 let shape = RoundedRectangle(cornerRadius: 12)
-                if card.isMatched{
-                    shape.opacity(0)
-                }else if card.isFaceUp{
+                if card.isFaceUp{
                     shape.fill().foregroundColor(calColor(by: card.foregroundColor).opacity(0.5))
                     shape.strokeBorder(lineWidth: 3)
                     Text(card.content)

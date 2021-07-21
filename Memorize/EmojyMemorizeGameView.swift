@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EmojyMemorizeGameView: View {
     
-    @ObservedObject var gameView = EmojyMemorizeGame(pairNumberOfCards: 4)
+    @ObservedObject var gameView = EmojyMemorizeGame(numberOfCards: 4)
     
     var body: some View {
         ScrollView{
