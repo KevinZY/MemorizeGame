@@ -28,13 +28,13 @@ struct MemorizeGame<Content> where Content: Hashable{
         self.contentPool = contentPool
         self.cards = []
         self.usedContentIndex = 0
-        self.contentPool.shuffle()
         for i in 0..<forInitCardNumber {
             cards.append(Card(id: i*3, content: self.contentPool[i]))
             cards.append(Card(id: i*3 + 1 , content: self.contentPool[i]))
             cards.append(Card(id: i*3 + 2, content: self.contentPool[i]))
             usedContentIndex += 1
         }
+        self.cards.shuffle()
     }
     
     mutating func choose(_ card: Card) {
