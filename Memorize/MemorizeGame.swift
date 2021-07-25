@@ -13,6 +13,7 @@ struct MemorizeGame<Content> where Content: Hashable{
     private var contentPool: [Content]
     private(set) var cards: [Card]
     private var usedContentIndex:Int
+    var canDealMoreCards:Bool {usedContentIndex < contentPool.count}
     
     private var faceUpCardsIndexes: [Int]{
         var indexes:[Int] = []
@@ -35,6 +36,15 @@ struct MemorizeGame<Content> where Content: Hashable{
             usedContentIndex += 1
         }
         self.cards.shuffle()
+    }
+    
+    mutating func deal3MoreCards() {
+        if usedContentIndex < contentPool.count {
+            cards.append(Card(id: usedContentIndex*3, content: self.contentPool[usedContentIndex]))
+            cards.append(Card(id: usedContentIndex*3 + 1 , content: self.contentPool[usedContentIndex]))
+            cards.append(Card(id: usedContentIndex*3 + 2, content: self.contentPool[usedContentIndex]))
+            usedContentIndex += 1
+        }
     }
     
     mutating func choose(_ card: Card) {

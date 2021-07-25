@@ -12,16 +12,37 @@ struct EmojyMemorizeGameView: View {
     @ObservedObject var gameView = EmojyMemorizeGame(numberOfCards: 4)
     
     var body: some View {
-        ScrollView{
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                ForEach(gameView.gameModel.cards, content: { card in
-                    CardView(card: card)
-                        .aspectRatio(2/2.5 , contentMode: .fit)
-                        .onTapGesture {gameView.choose(card)}
-                })
-            }.padding()
-        }
+        VStack{
+            AdaptiveAspectVGrid(items: gameView.gameModel.cards, aspectRatio: 2/2.5, content: {card in
+                CardView(card: card).onTapGesture {gameView.choose(card)}
+            })
+            Spacer()
+            HStack{
+                dealCardsButton.disabled(!gameView.gameModel.canDealMoreCards)
+                Spacer()
+                newGameButton
+            }
+            
+        }.padding()
     }
+    
+    var dealCardsButton: some View{
+        Button(action: {
+            gameView.deal3MoreCards()
+        }, label: {
+            Image(systemName: "plus.square.on.square")
+            Text("Deal 3 More Cards")
+        })
+    }
+    var newGameButton: some View {
+        Button(action: {
+            gameView.newGame(numberOfCards: 4)
+        }, label: {
+            Image(systemName: "arrow.clockwise")
+            Text("New Game")
+        })
+    }
+    
 }
 
 struct EmojyMemorizeGameView_Previews: PreviewProvider {

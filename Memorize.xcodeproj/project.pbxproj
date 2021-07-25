@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4142E24926AD51CA0026D2F6 /* AdaptiveAspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4142E24826AD51CA0026D2F6 /* AdaptiveAspectVGrid.swift */; };
 		418387F826A86D8B00655495 /* CardColorEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418387F726A86D8B00655495 /* CardColorEnum.swift */; };
 		418387FA26A86D9E00655495 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418387F926A86D9E00655495 /* CardView.swift */; };
 		418387FC26A86DB500655495 /* EmojyMemorizeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418387FB26A86DB500655495 /* EmojyMemorizeGame.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4142E24826AD51CA0026D2F6 /* AdaptiveAspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveAspectVGrid.swift; sourceTree = "<group>"; };
 		418387F726A86D8B00655495 /* CardColorEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardColorEnum.swift; sourceTree = "<group>"; };
 		418387F926A86D9E00655495 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		418387FB26A86DB500655495 /* EmojyMemorizeGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojyMemorizeGame.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				418387FB26A86DB500655495 /* EmojyMemorizeGame.swift */,
 				418387FD26A86DC600655495 /* EmojyMemorizeGameView.swift */,
 				418387FF26A86DEF00655495 /* MemorizeGame.swift */,
+				4142E24826AD51CA0026D2F6 /* AdaptiveAspectVGrid.swift */,
 			);
 			path = Memorize;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 				418387FE26A86DC600655495 /* EmojyMemorizeGameView.swift in Sources */,
 				418387FA26A86D9E00655495 /* CardView.swift in Sources */,
 				A06E086D26749A8000EFCD8F /* MemorizeApp.swift in Sources */,
+				4142E24926AD51CA0026D2F6 /* AdaptiveAspectVGrid.swift in Sources */,
 				4183880026A86DEF00655495 /* MemorizeGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

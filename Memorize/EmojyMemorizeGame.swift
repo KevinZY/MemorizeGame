@@ -15,11 +15,18 @@ class EmojyMemorizeGame: ObservableObject {
     static var contents = ["🐶", "🐷", "🐔", "🐹", "🐻", "🐮", "🦁", "🐸", "🙊", "🐯", "🦉"]
     
     init(numberOfCards: Int = 4) {
-        EmojyMemorizeGame.contents.shuffle()
         gameModel = MemorizeGame(contentPool: EmojyMemorizeGame.contents, forInitCardNumber: numberOfCards)
+    }
+    
+    func deal3MoreCards() {
+        gameModel.deal3MoreCards()
     }
     
     func choose(_ card: Card) {
         gameModel.choose(card)
+    }
+    
+    func newGame(numberOfCards: Int) {
+        gameModel = MemorizeGame(contentPool: EmojyMemorizeGame.contents, forInitCardNumber: numberOfCards)
     }
 }
