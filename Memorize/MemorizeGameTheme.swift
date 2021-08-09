@@ -23,7 +23,7 @@ struct VehicleTheme: MemorizeGameTheme{
         r.shuffle()
         r = Array(r[0..<realNumber])
         r += r
-        r.shuffle()
+//        r.shuffle()
         return Array(r)
     }
 }
@@ -39,7 +39,7 @@ struct AnimalTheme: MemorizeGameTheme{
         r.shuffle()
         r = Array(r[0..<realNumber])
         r += r
-        r.shuffle()
+//        r.shuffle()
         return Array(r)
     }
 }
