@@ -48,20 +48,11 @@ struct CardView: View {
     
     var body: some View{
         GeometryReader{ geometry in
-            let shape = RoundedRectangle(cornerRadius: DrawingConsts.cornerRadius)
             ZStack{
-                if card.isMatched{
-                    shape.opacity(DrawingConsts.opacity)
-                }else if card.isFaceUp {
-                    shape.fill().foregroundColor(.white)
-                    shape.strokeBorder(lineWidth: DrawingConsts.borderWidth)
-                    //TODO: 重点研究SwiftUI的坐标系
-                    Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 120 - 90)).padding(5).opacity(0.6)
-                    Text(card.content).font(calFont(geometry))
-                }else {
-                    shape.fill()
-                }
-            }.foregroundColor(.red)
+                //TODO: 重点研究SwiftUI的坐标系
+                Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 120 - 90)).padding(5).opacity(0.6)
+                Text(card.content).font(calFont(geometry))
+            }.cardify(isFaceUp: card.isFaceUp, visible: !card.isMatched)
         }
     }
     
@@ -74,6 +65,12 @@ struct CardView: View {
         static let opacity:Double = 0
         static let borderWidth: CGFloat = 3
         static let fontScale: CGFloat = 0.7
+    }
+}
+
+extension View{
+    func cardify(isFaceUp: Bool, visible: Bool) -> some View {
+        self.modifier(Cardify(isFaceUp: isFaceUp, visible: visible))
     }
 }
 

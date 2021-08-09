@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		416FAD22268F7EE800F00C63 /* MemorizeGameTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416FAD21268F7EE800F00C63 /* MemorizeGameTheme.swift */; };
+		4199612526C0CDC800072EBC /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4199612426C0CDC800072EBC /* Cardify.swift */; };
 		41DF6AE6269F2CF9001D4ED9 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41DF6AE5269F2CF9001D4ED9 /* AspectVGrid.swift */; };
 		41DF6AE8269F3162001D4ED9 /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41DF6AE7269F3162001D4ED9 /* Pie.swift */; };
 		A0054AF7268866D900EDD240 /* MemorizeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0054AF6268866D900EDD240 /* MemorizeGame.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		416FAD21268F7EE800F00C63 /* MemorizeGameTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeGameTheme.swift; sourceTree = "<group>"; };
+		4199612426C0CDC800072EBC /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		41DF6AE5269F2CF9001D4ED9 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		41DF6AE7269F3162001D4ED9 /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
 		A0054AF6268866D900EDD240 /* MemorizeGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeGame.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				416FAD21268F7EE800F00C63 /* MemorizeGameTheme.swift */,
 				41DF6AE5269F2CF9001D4ED9 /* AspectVGrid.swift */,
 				41DF6AE7269F3162001D4ED9 /* Pie.swift */,
+				4199612426C0CDC800072EBC /* Cardify.swift */,
 			);
 			path = Memorize;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			files = (
 				41DF6AE8269F3162001D4ED9 /* Pie.swift in Sources */,
 				A0054AF9268866EC00EDD240 /* EmojyMemorizeGame.swift in Sources */,
+				4199612526C0CDC800072EBC /* Cardify.swift in Sources */,
 				A06E086F26749A8000EFCD8F /* EmojyMemorizeGameView.swift in Sources */,
 				41DF6AE6269F2CF9001D4ED9 /* AspectVGrid.swift in Sources */,
 				A0054AF7268866D900EDD240 /* MemorizeGame.swift in Sources */,
