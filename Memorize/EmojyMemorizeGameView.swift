@@ -18,18 +18,38 @@ struct EmojyMemorizeGameView: View {
             Text("Point: \(game.gameModel.point)").font(.title2)
             Spacer()
             AspectVGrid(items: game.gameModel.cards, aspectRatio: 2/3, content: {card in
-                CardView(card).onTapGesture {
-                    game.choose(card)
+                if card.isMatched && !card.isFaceUp {
+                    //注意放的位置，如果放到cardView里面，则控制的还是cardView的效果
+                    Color.clear
+                }else{
+                    CardView(card)
+                    .padding(4)
+                    .transition(AnyTransition.scale)
+                    .onTapGesture {
+                        withAnimation(.easeOut){
+                            game.choose(card)
+                        }
+                    }
                 }
-            })
+            }).foregroundColor(.red)
             HStack{
                 Button(action: {
-                    game.newGame()
+                    withAnimation(.easeInOut(duration: 0.75)){
+                        game.newGame()
+                    }
                 }, label: {
                     Image(systemName: "macwindow.badge.plus")
                     Text("NewGame")
                 })
                 Spacer()
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.75)){
+                        game.shuffle()
+                    }
+                }, label: {
+                    Image(systemName: "shuffle.circle")
+                    Text("Shuffle")
+                })
             }
         }
         .padding()
@@ -56,7 +76,7 @@ struct CardView: View {
                     .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
                     .font(Font.system(size: DrawingConsts.fontSize))
                     .scaleEffect(scale(geometry.size))
-            }.cardify(isFaceUp: card.isFaceUp, visible: true)
+            }.cardify(isFaceUp: card.isFaceUp)
         }
     }
     
@@ -74,8 +94,8 @@ struct CardView: View {
 }
 
 extension View{
-    func cardify(isFaceUp: Bool, visible: Bool) -> some View {
-        self.modifier(Cardify(isFaceUp: isFaceUp, visible: visible))
+    func cardify(isFaceUp: Bool) -> some View {
+        self.modifier(Cardify(isFaceUp: isFaceUp))
     }
 }
 

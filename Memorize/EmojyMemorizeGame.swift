@@ -35,6 +35,9 @@ class EmojyMemorizeGame: ObservableObject {
             content[index]
         }
     }
+    func shuffle() {
+        gameModel.shuffle()
+    }
     
     func choose(_ card: Card) {
         gameModel.choose(card)
