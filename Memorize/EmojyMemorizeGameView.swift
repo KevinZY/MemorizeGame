@@ -73,7 +73,7 @@ struct CardView: View {
                 Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 120 - 90)).padding(5).opacity(0.6)
                 Text(card.content)
                     .rotationEffect(Angle.degrees(card.isMatched ? 360: 0))
-                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+                    .animation(Animation.linear(duration: 1).repeat(while: card.isFaceUp))
                     .font(Font.system(size: DrawingConsts.fontSize))
                     .scaleEffect(scale(geometry.size))
             }.cardify(isFaceUp: card.isFaceUp)
@@ -99,8 +99,15 @@ extension View{
     }
 }
 
-
-
+extension Animation{
+    func `repeat`(while exp: Bool, autoreverse: Bool = false) -> Animation {
+        if exp {
+            return self.repeatForever(autoreverses: autoreverse)
+        }else{
+            return self
+        }
+    }
+}
 
 
 
