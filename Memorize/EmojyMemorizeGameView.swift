@@ -12,47 +12,106 @@ struct EmojyMemorizeGameView: View {
     
     @ObservedObject var game:EmojyMemorizeGame
     
+    @Namespace private var dealing
+    
+    @State private var dealtCardIndex:Set<Int> = []
+    
     var body: some View{
         VStack{
             Text("\(game.theme.name)").font(.largeTitle)
             Text("Point: \(game.gameModel.point)").font(.title2)
             Spacer()
-            AspectVGrid(items: game.gameModel.cards, aspectRatio: 2/3, content: {card in
-                if card.isMatched && !card.isFaceUp {
-                    //注意放的位置，如果放到cardView里面，则控制的还是cardView的效果
-                    Color.clear
-                }else{
-                    CardView(card)
-                    .padding(4)
-                    .transition(AnyTransition.scale)
-                    .onTapGesture {
-                        withAnimation(.easeOut){
-                            game.choose(card)
-                        }
-                    }
-                }
-            }).foregroundColor(.red)
+            gameBody
+            deckBody
             HStack{
-                Button(action: {
-                    withAnimation(.easeInOut(duration: 0.75)){
-                        game.newGame()
-                    }
-                }, label: {
-                    Image(systemName: "macwindow.badge.plus")
-                    Text("NewGame")
-                })
+                newGameButton
                 Spacer()
-                Button(action: {
-                    withAnimation(.easeInOut(duration: 0.75)){
-                        game.shuffle()
-                    }
-                }, label: {
-                    Image(systemName: "shuffle.circle")
-                    Text("Shuffle")
-                })
+                shuffleButton
             }
         }
         .padding()
+    }
+    
+    func zIndex(_ card: MemorizeGame<String>.Card) -> Double {
+        -Double(game.gameModel.cards.firstIndex(where: { $0.id == card.id}) ?? 0)
+    }
+    
+    var gameBody: some View{
+        AspectVGrid(items: game.gameModel.cards, aspectRatio: DrawingConsts.aspectRatio , content: {card in
+            if isUndealt(card: card) || (card.isMatched && !card.isFaceUp) {
+                //注意放的位置，如果放到cardView里面，则控制的还是cardView的效果
+                Color.clear
+            }else{
+                CardView(card)
+                .matchedGeometryEffect(id: card.id, in: dealing)
+                .zIndex(zIndex(card))
+//                .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity))
+                .onTapGesture {
+                    withAnimation(.easeInOut){
+                        game.choose(card)
+                    }
+                }
+            }
+        }).foregroundColor(.red)
+    }
+    
+    var deckBody: some View{
+        ZStack{
+            ForEach(game.gameModel.cards.filter(isUndealt)){
+                CardView($0)
+                    .matchedGeometryEffect(id: $0.id, in: dealing)
+                    .zIndex(zIndex($0))
+            }
+        }
+        .frame(width: DrawingConsts.undealtWidth, height: DrawingConsts.undealtHeight)
+        .foregroundColor(.red)
+        .onTapGesture {
+            for card in game.gameModel.cards{
+                withAnimation(dealAnimation(card)) {
+                    deal(card: card)
+                }
+            }
+        }
+    }
+    
+    
+    func deal(card: MemorizeGame<String>.Card) {
+        dealtCardIndex.insert(card.id)
+    }
+    
+    func isUndealt(card: MemorizeGame<String>.Card) -> Bool {
+        !dealtCardIndex.contains(card.id)
+    }
+    
+    var newGameButton: some View{
+        Button(action: {
+            withAnimation(.easeInOut){
+                dealtCardIndex.removeAll()
+                game.newGame()
+            }
+        }, label: {
+            Image(systemName: "macwindow.badge.plus")
+            Text("NewGame")
+        })
+    }
+    
+    var shuffleButton: some View{
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.75)){
+                game.shuffle()
+            }
+        }, label: {
+            Image(systemName: "shuffle.circle")
+            Text("Shuffle")
+        })
+    }
+    
+    func dealAnimation(_ card: MemorizeGame<String>.Card) -> Animation {
+        var delay = 0.0
+        if let index = game.gameModel.cards.firstIndex(where: { $0.id == card.id}){
+            delay = Double(index) * 2 / Double(game.gameModel.cards.count)
+        }
+        return Animation.easeInOut(duration: 0.5).delay(delay)
     }
 }
 
@@ -87,10 +146,15 @@ struct CardView: View {
         return (min(size.width, size.height)/DrawingConsts.fontSize) * DrawingConsts.fontScale
     }
     
-    private struct DrawingConsts{
-        static let fontScale: CGFloat = 0.7
-        static let fontSize: CGFloat = 32
-    }
+    
+}
+
+private struct DrawingConsts{
+    static let fontScale: CGFloat = 0.7
+    static let fontSize: CGFloat = 32
+    static let aspectRatio: CGFloat = 2 / 3
+    static let undealtWidth: CGFloat = undealtHeight * aspectRatio
+    static let undealtHeight: CGFloat = 90
 }
 
 extension View{
