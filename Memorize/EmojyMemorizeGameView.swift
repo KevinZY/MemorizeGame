@@ -119,6 +119,8 @@ struct CardView: View {
     
     typealias Card = MemorizeGame<String>.Card
     
+    @State var animatedCountTimeRemaining:Double = 0
+    
     private var card: Card
     
     init(_ givenCard: Card) {
@@ -129,7 +131,20 @@ struct CardView: View {
         GeometryReader{ geometry in
             ZStack{
                 //TODO: 重点研究SwiftUI的坐标系
-                Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 120 - 90)).padding(5).opacity(0.6)
+                Group{
+                    if card.isConsumingCountTime{
+                        Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1 - animatedCountTimeRemaining) * 360 - 90))
+                            .onAppear{
+                                animatedCountTimeRemaining = card.percentageRemaining
+                                withAnimation(.linear(duration: card.timeRemaing)) {
+                                    animatedCountTimeRemaining = 0
+                                }
+                            }
+                    }else{
+                        Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1 - card.percentageRemaining) * 360 - 90))
+                    }
+                }.padding(5).opacity(0.6)
+                
                 Text(card.content)
                     .rotationEffect(Angle.degrees(card.isMatched ? 360: 0))
                     .animation(Animation.linear(duration: 1).repeat(while: card.isFaceUp))
