@@ -17,19 +17,20 @@ struct EmojyMemorizeGameView: View {
     @State private var dealtCardIndex:Set<Int> = []
     
     var body: some View{
-        VStack{
-            Text("\(game.theme.name)").font(.largeTitle)
-            Text("Point: \(game.gameModel.point)").font(.title2)
-            Spacer()
-            gameBody
-            deckBody
-            HStack{
-                newGameButton
+        ZStack(alignment: .bottom){
+            VStack{
+                Text("\(game.theme.name)").font(.largeTitle)
+                Text("Point: \(game.gameModel.point)").font(.title2)
                 Spacer()
-                shuffleButton
-            }
+                gameBody
+                HStack{
+                    newGameButton
+                    Spacer()
+                    shuffleButton
+                }
+            }.padding()
+            deckBody
         }
-        .padding()
     }
     
     func zIndex(_ card: MemorizeGame<String>.Card) -> Double {
